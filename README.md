@@ -3,8 +3,39 @@
 A multi-stakeholder billing and reporting system for multi-client, multi-vendor operations. Backend: Spring Boot (REST, Security, JPA, Caffeine). Database: PostgreSQL (indexes, constraints). Frontend: React (Dashboard, CRUD, Reports).
 
 ---
+<img width="1902" height="793" alt="image" src="https://github.com/user-attachments/assets/1bb8184b-a532-4882-9056-13016f371c4f" />
+<img width="1899" height="790" alt="image" src="https://github.com/user-attachments/assets/e337d9df-91cf-4ad2-b7d6-06610fca622e" />
+<img width="1916" height="812" alt="image" src="https://github.com/user-attachments/assets/40e26b91-26da-4af4-919d-198592788f72" />
+<img width="1190" height="742" alt="image" src="https://github.com/user-attachments/assets/e157a99f-c3ba-42a2-a2cb-800d2e433e0a" />
+<img width="1885" height="742" alt="image" src="https://github.com/user-attachments/assets/6c4a7458-cdc5-46b9-9c19-23c5ec4f7efd" />
+<img width="1899" height="711" alt="image" src="https://github.com/user-attachments/assets/d6e22660-62c9-4b0f-921b-ae5144a04434" />
+<img width="1904" height="781" alt="image" src="https://github.com/user-attachments/assets/30160941-2c05-4580-92a6-db78122b65a4" />
+<img width="1913" height="676" alt="image" src="https://github.com/user-attachments/assets/5247a1c8-7fe6-4aea-9c98-6f788087dcf9" />
+<img width="1908" height="749" alt="image" src="https://github.com/user-attachments/assets/1c3642ec-ba90-4750-ad55-7c5caac7011c" />
+employee page
+<img width="1908" height="696" alt="image" src="https://github.com/user-attachments/assets/4814d6a6-728f-46a6-9d53-f4591eb05199" />
+pdf output
+<img width="1191" height="733" alt="image" src="https://github.com/user-attachments/assets/90ef7d13-f3b1-4739-b372-35ffcba31a3e" />
+venddor page
+<img width="1829" height="680" alt="image" src="https://github.com/user-attachments/assets/b5e73742-ecde-4661-be89-b499152ba9f7" />
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## 1) System Overview
+
+[https://github.com/user-attachments/assets/db7cb499-56b1-49f9-807d-6c259b2224fd](https://github.com/user-attachments/assets/db7cb499-56b1-49f9-807d-6c259b2224fd)
+
+
 - React UI → Spring Boot REST → PostgreSQL
 - Layered backend: Controller → Service (business logic) → Repository (Spring Data JPA)
 - JWT stateless authentication + RBAC (ADMIN, VENDOR, EMPLOYEE)
@@ -310,4 +341,4 @@ Credentials (sample):
 
 © MoveInSync Billing Platform – Technical Documentation
 
-frame it sucht hat it slookm roe visually apealing so make 14 pt to above after first point this 2nd point will come or but can i also upload video mp4 at github how much max mb fiel i can and reorder and arrnage it nciely
+plz generate a eye catching md readmemd fie arrnageing all nicely using corrcet goodt erms for employee and vendor page and gappinga nd formatting no extra content
