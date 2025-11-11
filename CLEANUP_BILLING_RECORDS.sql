@@ -1,13 +1,4 @@
--- ============================================
--- BILLING PLATFORM - CLEANUP SQL COMMANDS
--- ============================================
--- Use these commands to delete billing records and reset processed trips
--- This allows you to reprocess billing for testing purposes
--- ============================================
 
--- ============================================
--- 1. DELETE BILLING RECORDS
--- ============================================
 
 -- Delete billing record for specific vendor and month/year
 DELETE FROM billing_records 
@@ -27,9 +18,7 @@ WHERE billing_month = 11
 -- Delete ALL billing records (complete cleanup)
 DELETE FROM billing_records;
 
--- ============================================
--- 2. RESET TRIP PROCESSED FLAGS
--- ============================================
+
 
 -- Reset processed flag for specific vendor and month/year
 UPDATE trips 
@@ -61,9 +50,7 @@ SET processed = false,
     vendor_cost = NULL,
     employee_incentive = NULL;
 
--- ============================================
--- 3. DELETE INVOICES (if applicable)
--- ============================================
+
 
 -- Delete invoices for specific vendor and month/year
 DELETE FROM invoices 
@@ -78,9 +65,7 @@ WHERE vendor_id = 1;
 -- Delete ALL invoices
 DELETE FROM invoices;
 
--- ============================================
--- 4. QUICK CLEANUP SCRIPT FOR VENDOR 1, NOV 2025
--- ============================================
+
 
 -- Run this as a single transaction for vendor 1 in Nov 2025
 BEGIN;
@@ -108,9 +93,7 @@ WHERE vendor_id = 1
 
 COMMIT;
 
--- ============================================
--- 5. CLEANUP FOR ALL VENDORS IN NOV 2025
--- ============================================
+
 
 BEGIN;
 
@@ -154,9 +137,7 @@ DELETE FROM invoices;
 
 COMMIT;
 
--- ============================================
--- 7. CHECK STATUS QUERIES
--- ============================================
+
 
 -- Check billing records for vendor 1
 SELECT * FROM billing_records 
@@ -185,10 +166,6 @@ FROM billing_records br
 JOIN vendors v ON br.vendor_id = v.id
 ORDER BY br.created_at DESC;
 
--- ============================================
--- 8. VENDOR-SPECIFIC CLEANUP COMMANDS
--- ============================================
-
 -- Vendor 1 (SwiftCabs)
 DELETE FROM billing_records WHERE vendor_id = 1;
 UPDATE trips SET processed = false, vendor_cost = NULL, employee_incentive = NULL WHERE vendor_id = 1;
@@ -201,18 +178,14 @@ UPDATE trips SET processed = false, vendor_cost = NULL, employee_incentive = NUL
 DELETE FROM billing_records WHERE vendor_id = 3;
 UPDATE trips SET processed = false, vendor_cost = NULL, employee_incentive = NULL WHERE vendor_id = 3;
 
--- ============================================
--- 9. EMPLOYEE INCENTIVE CLEANUP (if separate table exists)
--- ============================================
+
 
 -- If there's a separate employee_incentives table:
 DELETE FROM employee_incentives 
 WHERE EXTRACT(MONTH FROM period_start) = 11
   AND EXTRACT(YEAR FROM period_start) = 2025;
 
--- ============================================
--- 10. SAFE TESTING: DELETE ONLY SPECIFIC RECORD
--- ============================================
+
 
 -- Get the ID first
 SELECT id, vendor_id, billing_month, billing_year, total_amount 
