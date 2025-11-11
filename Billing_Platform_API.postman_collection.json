@@ -1,0 +1,778 @@
+{
+	"info": {
+		"_postman_id": "billing-platform-complete-2025",
+		"name": "🚀 Billing Platform - Complete API Collection",
+		"description": "**Ready-to-Run Postman Collection for MoveInSync Billing Platform**\n\n✅ All 20+ endpoints with pre-filled JSON bodies\n✅ Automatic JWT Bearer token management\n✅ Complete sample data matching backend\n✅ Role-based testing (Admin, Vendor, Employee)\n✅ Organized in 7 folders\n✅ Frontend + Backend integrated\n\n**Authentication:** Bearer Token (JWT)\n**Quick Start:**\n1. Import this collection\n2. Import the environment file\n3. Run 'Login as Admin' (token auto-saved)\n4. Start testing any endpoint!\n\n**Base URL:** http://localhost:8080/api\n**Database:** moveinsync (PostgreSQL)\n\n**Roles & Access:**\n- ADMIN: Full access to all endpoints\n- VENDOR: Self reports only\n- EMPLOYEE: Self reports only",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "billing-platform"
+	},
+	"item": [
+		{
+			"name": "1. Authentication",
+			"item": [
+				{
+					"name": "Login as Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"jwt_token\", jsonData.token);",
+									"    pm.environment.set(\"user_role\", jsonData.role);",
+									"    pm.environment.set(\"username\", jsonData.username);",
+									"    console.log(\"Token saved: \" + jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "login"]
+						},
+						"description": "Login as admin user and get JWT token"
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Employee (abhikakm)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"jwt_token\", jsonData.token);",
+									"    pm.environment.set(\"user_role\", jsonData.role);",
+									"    pm.environment.set(\"username\", jsonData.username);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"abhikakm\",\n    \"password\": \"employee123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "login"]
+						},
+						"description": "Login as employee user"
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Vendor (swiftcabs)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"jwt_token\", jsonData.token);",
+									"    pm.environment.set(\"user_role\", jsonData.role);",
+									"    pm.environment.set(\"username\", jsonData.username);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"swiftcabs\",\n    \"password\": \"vendor123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "login"]
+						},
+						"description": "Login as vendor user"
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication endpoints for different user roles"
+		},
+		{
+			"name": "2. Clients Management",
+			"item": [
+				{
+					"name": "Get All Clients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/clients",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "clients"]
+						},
+						"description": "Get list of all clients (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Client by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/clients/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "clients", "1"]
+						},
+						"description": "Get specific client by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Client",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientCode\": \"CLT004\",\n    \"name\": \"Test Corporation\",\n    \"email\": \"test@corp.com\",\n    \"phone\": \"9876543299\",\n    \"address\": \"Bangalore, Karnataka\",\n    \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/clients",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "clients"]
+						},
+						"description": "Create a new client"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Client",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientCode\": \"CLT001\",\n    \"name\": \"Tech Corp Updated\",\n    \"email\": \"contact@techcorp.com\",\n    \"phone\": \"9876543210\",\n    \"address\": \"Bangalore, Karnataka\",\n    \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/clients/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "clients", "1"]
+						},
+						"description": "Update existing client"
+					},
+					"response": []
+				}
+			],
+			"description": "Client management endpoints (Admin only)"
+		},
+		{
+			"name": "3. Vendors Management",
+			"item": [
+				{
+					"name": "Get All Vendors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/vendors",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "vendors"]
+						},
+						"description": "Get list of all vendors (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vendor by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/vendors/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "vendors", "1"]
+						},
+						"description": "Get specific vendor details including billing configuration"
+					},
+					"response": []
+				}
+			],
+			"description": "Vendor management endpoints (Admin only)"
+		},
+		{
+			"name": "4. Employees Management",
+			"item": [
+				{
+					"name": "Get All Employees",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/employees",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "employees"]
+						},
+						"description": "Get list of all employees (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employee by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/employees/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "employees", "1"]
+						},
+						"description": "Get specific employee details"
+					},
+					"response": []
+				}
+			],
+			"description": "Employee management endpoints (Admin only)"
+		},
+		{
+			"name": "5. Trips Management",
+			"item": [
+				{
+					"name": "Get All Trips",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/trips",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "trips"]
+						},
+						"description": "Get list of all trips (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trip by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/trips/1",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "trips", "1"]
+						},
+						"description": "Get specific trip details"
+					},
+					"response": []
+				}
+			],
+			"description": "Trip management endpoints (Admin only)"
+		},
+		{
+			"name": "6. Billing Processing",
+			"item": [
+				{
+					"name": "Process Billing for Specific Vendor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/billing/process/1?month=11&year=2025",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "billing", "process", "1"],
+							"query": [
+								{
+									"key": "month",
+									"value": "11",
+									"description": "Billing month (1-12)"
+								},
+								{
+									"key": "year",
+									"value": "2025",
+									"description": "Billing year"
+								}
+							]
+						},
+						"description": "Process billing for vendor ID 1 (Swift Cabs) for November 2025"
+					},
+					"response": []
+				},
+				{
+					"name": "Process Billing for Vendor 2 (Metro Transport)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/billing/process/2?month=11&year=2025",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "billing", "process", "2"],
+							"query": [
+								{
+									"key": "month",
+									"value": "11"
+								},
+								{
+									"key": "year",
+									"value": "2025"
+								}
+							]
+						},
+						"description": "Process billing for vendor ID 2 (Metro Transport - Trip Model)"
+					},
+					"response": []
+				},
+				{
+					"name": "Process Billing for Vendor 3 (City Rides)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/billing/process/3?month=11&year=2025",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "billing", "process", "3"],
+							"query": [
+								{
+									"key": "month",
+									"value": "11"
+								},
+								{
+									"key": "year",
+									"value": "2025"
+								}
+							]
+						},
+						"description": "Process billing for vendor ID 3 (City Rides - Hybrid Model)"
+					},
+					"response": []
+				},
+				{
+					"name": "Process Billing for All Vendors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/admin/billing/process-all?month=11&year=2025",
+							"host": ["{{base_url}}"],
+							"path": ["api", "admin", "billing", "process-all"],
+							"query": [
+								{
+									"key": "month",
+									"value": "11",
+									"description": "Billing month (1-12)"
+								},
+								{
+									"key": "year",
+									"value": "2025",
+									"description": "Billing year"
+								}
+							]
+						},
+						"description": "Process billing for all vendors at once for November 2025"
+					},
+					"response": []
+				}
+			],
+			"description": "Billing processing endpoints (Admin only) - Core functionality"
+		},
+		{
+			"name": "7. Reports - Admin",
+			"item": [
+				{
+					"name": "Get Client Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/reports/client/1?month=11&year=2025",
+							"host": ["{{base_url}}"],
+							"path": ["api", "reports", "client", "1"],
+							"query": [
+								{
+									"key": "month",
+									"value": "11"
+								},
+								{
+									"key": "year",
+									"value": "2025"
+								}
+							]
+						},
+						"description": "Get consolidated billing report for client ID 1 (Tech Corp)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vendor Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/reports/vendor/1?month=11&year=2025",
+							"host": ["{{base_url}}"],
+							"path": ["api", "reports", "vendor", "1"],
+							"query": [
+								{
+									"key": "month",
+									"value": "11"
+								},
+								{
+									"key": "year",
+									"value": "2025"
+								}
+							]
+						},
+						"description": "Get billing report for vendor ID 1 (Swift Cabs)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employee Incentive Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/reports/employee/1?month=11&year=2025",
+							"host": ["{{base_url}}"],
+							"path": ["api", "reports", "employee", "1"],
+							"query": [
+								{
+									"key": "month",
+									"value": "11"
+								},
+								{
+									"key": "year",
+									"value": "2025"
+								}
+							]
+						},
+						"description": "Get incentive report for employee ID 1 (Abhishek Kumar)"
+					},
+					"response": []
+				}
+			],
+			"description": "Reporting endpoints for Admin users"
+		},
+		{
+			"name": "8. Reports - Vendor (Self)",
+			"item": [
+				{
+					"name": "Get My Vendor Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/reports/vendor/me?month=11&year=2025",
+							"host": ["{{base_url}}"],
+							"path": ["api", "reports", "vendor", "me"],
+							"query": [
+								{
+									"key": "month",
+									"value": "11"
+								},
+								{
+									"key": "year",
+									"value": "2025"
+								}
+							]
+						},
+						"description": "Vendor can view their own billing report (Login as swiftcabs first)"
+					},
+					"response": []
+				}
+			],
+			"description": "Vendor self-service reports (Login as vendor user)"
+		},
+		{
+			"name": "9. Reports - Employee (Self)",
+			"item": [
+				{
+					"name": "Get My Employee Incentive Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/reports/employee/me?month=11&year=2025",
+							"host": ["{{base_url}}"],
+							"path": ["api", "reports", "employee", "me"],
+							"query": [
+								{
+									"key": "month",
+									"value": "11"
+								},
+								{
+									"key": "year",
+									"value": "2025"
+								}
+							]
+						},
+						"description": "Employee can view their own incentive report (Login as abhikakm first)"
+					},
+					"response": []
+				}
+			],
+			"description": "Employee self-service reports (Login as employee user)"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

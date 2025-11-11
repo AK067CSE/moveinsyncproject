@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: unified-billing-platform
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/moveinsync
+
+    username: postgres
+    password: test
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=30m
+
+jwt:
+  secret: your-256-bit-secret-key-change-this-in-production
+  expiration: 86400000
+
+logging:
+  level:
+    com.moveinsync: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
