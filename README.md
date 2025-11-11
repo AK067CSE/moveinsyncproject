@@ -6,11 +6,11 @@ A multi-stakeholder billing and reporting system for multi-client, multi-vendor 
 
 ## Screenshots
 
--LOGIN PAGE
+ LOGIN PAGE
 <img width="1902" height="793" alt="image" src="https://github.com/user-attachments/assets/1bb8184b-a532-4882-9056-13016f371c4f" />
--DASHBOARD
+ DASHBOARD
 <img width="1899" height="790" alt="image" src="https://github.com/user-attachments/assets/e337d9df-91cf-4ad2-b7d6-06610fca622e" />
--REPORT GENERATION
+ REPORT GENERATION
 <img width="1916" height="812" alt="image" src="https://github.com/user-attachments/assets/40e26b91-26da-4af4-919d-198592788f72" />
 
 ---
