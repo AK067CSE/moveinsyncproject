@@ -1,403 +1,313 @@
-# 🚀 Unified Billing & Reporting Platform
+# Unified Billing & Reporting Platform
 
-A production-grade multi-stakeholder billing system for managing multi-client, multi-vendor operations with comprehensive reporting capabilities.
-
-[![Java](https://img.shields.ps://img.shields.io/badge/Spring//img.shields.io(https://img.shields.ioshields.io/badge/License-MIT-yellow
-
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Technology Stack](#technology-stack)
-- [System Architecture](#system-architecture)
-- [Screenshots](#screenshots)
-- [Getting Started](#getting-started)
-- [API Documentation](#api-documentation)
-- [Database Schema](#database-schema)
-- [Security & Authentication](#security--authentication)
-- [Demo Videos](#demo-videos)
-
-***
-
-## 🎯 Overview
-
-A comprehensive billing and reporting platform designed to handle complex multi-tenant operations with vendor management, employee tracking, and automated billing workflows. Built with enterprise-grade architecture featuring JWT authentication, role-based access control, and optimized performance through intelligent caching.
-
-**Architecture**: React → Spring Boot REST API → PostgreSQL
-
-***
-
-## ✨ Key Features
-
-### Core Capabilities
-- **Multi-Tenant Operations** - Isolated data access for clients, vendors, and employees
-- **Automated Billing Engine** - Strategy pattern implementation (Package/Trip/Hybrid billing)
-- **Role-Based Access Control** - ADMIN, VENDOR, and EMPLOYEE roles with granular permissions
-- **Real-Time Reporting** - Client, vendor, and employee analytics with PDF export
-- **High Performance** - Caffeine caching layer (2-5ms cached response times)
-- **Secure Authentication** - Stateless JWT with BCrypt password hashing
-
-### Stakeholder Modules
-
-#### Vendor Management
-- Track trips and billing records
-- View monthly invoices and payment history
-- Access vendor-specific performance reports
-- Manage vendor profiles and billing configurations
-
-#### Employee Portal
-- Personal trip history and incentive tracking
-- Monthly performance reports
-- Individual earnings and metrics
-- Secure access to personal data
+A multi-stakeholder billing and reporting system for multi-client, multi-vendor operations. Backend: Spring Boot (REST, Security, JPA, Caffeine). Database: PostgreSQL (indexes, constraints). Frontend: React (Dashboard, CRUD, Reports).
 
 ---
 
-## 🛠️ Technology Stack
-
-### Backend
-- **Framework**: Spring Boot 3.x
-- **Security**: Spring Security + JWT (HS256)
-- **ORM**: Spring Data JPA + Hibernate
-- **Caching**: Caffeine (in-memory)
-- **Database**: PostgreSQL 14+
-- **Connection Pool**: HikariCP
-
-### Frontend
-- **Framework**: React 18
-- **HTTP Client**: Axios
-- **UI Components**: Custom component library
-- **Routing**: React Router
-
-### DevOps
-- **Build Tool**: Maven
-- **Package Manager**: npm
-- **Database Migration**: Hibernate DDL
-
-***
-
-## 🏗️ System Architecture
-
-```
-┌─────────────┐
-│  React UI   │
-└──────┬──────┘
-       │ REST API (Axios)
-       ↓
-┌─────────────────────────────┐
-│   Spring Boot Backend       │
-│                             │
-│  ┌──────────────────────┐  │
-│  │   Controllers        │  │
-│  │   (JWT Filter)       │  │
-│  └──────────┬───────────┘  │
-│             ↓               │
-│  ┌──────────────────────┐  │
-│  │   Service Layer      │  │
-│  │   (Business Logic)   │  │
-│  └──────────┬───────────┘  │
-│             ↓               │
-│  ┌──────────────────────┐  │
-│  │   Repository Layer   │  │
-│  │   (Spring Data JPA)  │  │
-│  └──────────┬───────────┘  │
-└─────────────┼───────────────┘
-              ↓
-       ┌──────────────┐
-       │  PostgreSQL  │
-       └──────────────┘
-```
-
-### Request Flow
-1. UI calls REST endpoint via Axios
-2. JWT filter validates token and role
-3. Controller delegates to Service layer
-4. Service executes business logic with `@Transactional` boundaries
-5. Repository performs database operations
-6. DTO response returned to UI (no entity leakage)
-
-***
-
-## 📸 Screenshots
-
-### Dashboard Overview
-![Dashboard](https://github.com/user-attachments/assets/1bb8184b-a532-4882-9056-13 Management
-![Client Management](https://github.com/user-attachments/assets/e337d9df-91cf-4ad2-b7d6-06 Configuration
-![Billing Configuration](https://github.com/user-attachments/assets/40e26b91-26da-4af Management
-![Trip Management](https://github.com/user-attachments/assets/e157a99f-c3ba-42a2-a2cb-800 Records
-![Billing Records](https://github.com/user-attachments/assets/6c4a7458-cdc Dashboard
-![Reports](https://github.com/user-attachments/assets/d6e22660-62c9-4b0f-921b-ae
-![Vendor Portal](https://github.com/user-attachments/assets/b5e73742-ecde-4661d
-![Employee Dashboard](https://github.com/user-attachments/assets/4814d6a6-728f-46a6-9d53-f4 Invoice Export
-![PDF Export](https://github.com/user-attachments/assets/90ef7d13-f3b1-4739-b372-35ffcba31 🚀 Getting Started
-
-### Prerequisites
-- Java 17+
-- Maven 3.8+
-- Node.js 18+
-- PostgreSQL 14+
-
-### Database Setup
-
-```bash
-# Create database
-psql -U postgres -c "CREATE DATABASE moveinsync;"
-
-# Run schema scripts (optional)
-psql -U postgres -d moveinsync -f VIEW_ALL_DATABASE.sql
-```
-
-### Backend Setup
-
-```bash
-# Navigate to backend directory
-cd billing-platform
-
-# Install dependencies and build
-mvn clean install
-
-# Run application
-mvn spring-boot:run
-```
-
-**Configuration** (`src/main/resources/application.yml`):
-```yaml
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/moveinsync
-    username: postgres
-    password: your_password
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
-jwt:
-  secret: your-256-bit-secret-key-change-in-production
-  expiration: 86400000
-```
-
-### Frontend Setup
-
-```bash
-# Navigate to frontend directory
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start development server
-npm start
-```
-
-Access the application at `http://localhost:3000`
-
-### Default Credentials
-
-| Role | Username | Password |
-|------|----------|----------|
-| Admin | admin | admin |
-| Vendor | swiftcabs | vendor |
-| Employee | abhikakm | employee |
+## 1) System Overview
+- React UI → Spring Boot REST → PostgreSQL
+- Layered backend: Controller → Service (business logic) → Repository (Spring Data JPA)
+- JWT stateless authentication + RBAC (ADMIN, VENDOR, EMPLOYEE)
+- Caffeine in-memory caching for read-heavy endpoints
+- Transactional billing with Strategy Pattern (Package/Trip/Hybrid)
 
 ---
 
-## 📡 API Documentation
+## 2) Architecture & Flow
+- UI pages call REST endpoints via Axios; responses are DTOs (no JPA entities leaked)
+- Controllers are thin; Services encapsulate business logic, `@Transactional` boundaries
+- Repositories use derived methods, custom queries, pagination
+- HikariCP connection pool; consistent P95 response times on cached reads
 
-### Base URL
+Request example (Process Billing):
+1. UI calls `POST /api/admin/billing/process/{vendorId}?month=&year=`
+2. Security filter validates JWT + ADMIN role
+3. Service fetches trips by date range, resolves strategy, computes totals, marks trips processed, persists BillingRecord
+4. Returns DTO to UI; Billing Records table updates
+
+---
+
+## 3) Authentication & Roles
+- JWT (HS256) with 24h expiry
+- BCrypt password hashing (strength 10)
+- Spring Security: `/api/auth/**` is public; all other endpoints require auth
+- Method-level RBAC with `@PreAuthorize`
+
+Roles:
+- ADMIN: Full CRUD, process billing, all reports
+- VENDOR: Own trips/billing/reports
+- EMPLOYEE: Own trip history/incentives
+
+---
+
+## 4) Multi-Tenancy / Tenant Isolation
+This implementation uses tenant-aware scoping at the application layer:
+- Data access is scoped by the authenticated user/vendor/client (no cross-tenant reads)
+- Role/ownership checks enforced server-side in services/repositories
+- Caching keys are entity-ID based and can be extended to include tenant/vendor identifiers if needed (e.g., `tenantId:id`)
+- UI reflects isolation via role-based menus and filtered data per user context
+
+Note: No separate schema-per-tenant is created in this codebase; isolation is enforced via access control and query scoping.
+
+---
+
+## 5) API Endpoints (with Roles)
+Base URL: `http://localhost:8080/api`
+
+- Auth
+  - POST `/auth/login` → issue JWT (PUBLIC)
+
+- Clients (ADMIN)
+  - GET `/clients` (ADMIN)
+  - GET `/clients/{id}` (ADMIN)
+  - POST `/clients` (ADMIN)
+  - PUT `/clients/{id}` (ADMIN)
+  - DELETE `/clients/{id}` (ADMIN)
+
+- Vendors (ADMIN)
+  - GET `/vendors` (ADMIN)
+  - GET `/vendors/{id}` (ADMIN)
+  - POST `/vendors` (ADMIN)
+  - PUT `/vendors/{id}` (ADMIN)
+  - DELETE `/vendors/{id}` (ADMIN)
+
+- Employees (ADMIN)
+  - GET `/employees` (ADMIN)
+  - CRUD (ADMIN)
+
+- Trips
+  - GET `/trips` (ADMIN, VENDOR limited to own)
+  - GET `/trips?from=&to=&vendorId=` (filters)
+
+- Billing Configurations (ADMIN)
+  - GET `/billing-configurations` (ADMIN)
+  - PUT `/billing-configurations/{vendorId}` (ADMIN)
+
+- Billing Processing (ADMIN)
+  - POST `/admin/billing/process/{vendorId}?month=&year=` (ADMIN)
+  - POST `/admin/billing/process-all?month=&year=` (ADMIN)
+
+- Billing Records / Invoices
+  - GET `/billing-records` (ADMIN; Vendor sees own)
+  - GET `/billing-records/{id}` (by role/ownership)
+
+- Reports
+  - GET `/reports/client?clientId=&month=&year=` (ADMIN)
+  - GET `/reports/vendor?vendorId=&month=&year=` (ADMIN, VENDOR own)
+  - GET `/reports/employee?employeeId=&month=&year=` (ADMIN, EMPLOYEE own)
+
+JWT header on all authenticated calls:
 ```
-http://localhost:8080/api
+Authorization: Bearer <token>
 ```
 
-### Authentication Endpoints
+---
 
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| POST | `/auth/login` | Public | Login and receive JWT token |
+## 6) Database Schema (PostgreSQL)
+Core tables: `users`, `clients`, `vendors`, `employees`, `billing_configurations`, `trips`, `billing_records`.
 
-**Request Body**:
-```json
-{
-  "username": "admin",
-  "password": "admin"
-}
-```
+Key integrity rules:
+- Foreign keys between vendor/client/employee/trip/billing_records
+- Unique constraint to prevent duplicate monthly billing per vendor:
+  - `(vendor_id, billing_month, billing_year)` on `billing_records`
 
-### Client Management (ADMIN)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/clients` | List all clients |
-| GET | `/clients/{id}` | Get client by ID |
-| POST | `/clients` | Create new client |
-| PUT | `/clients/{id}` | Update client |
-| DELETE | `/clients/{id}` | Delete client |
-
-### Vendor Management (ADMIN)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/vendors` | List all vendors |
-| GET | `/vendors/{id}` | Get vendor by ID |
-| POST | `/vendors` | Create new vendor |
-| PUT | `/vendors/{id}` | Update vendor |
-| DELETE | `/vendors/{id}` | Delete vendor |
-
-### Employee Management (ADMIN)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/employees` | List all employees |
-| GET | `/employees/{id}` | Get employee by ID |
-| POST | `/employees` | Create new employee |
-| PUT | `/employees/{id}` | Update employee |
-| DELETE | `/employees/{id}` | Delete employee |
-
-### Trip Management
-
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| GET | `/trips` | ADMIN, VENDOR | List trips (filtered by role) |
-| GET | `/trips?from=&to=&vendorId=` | ADMIN, VENDOR | Filter trips by date and vendor |
-
-### Billing Operations (ADMIN)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/billing-configurations` | List all billing configs |
-| PUT | `/billing-configurations/{vendorId}` | Update billing configuration |
-| POST | `/admin/billing/process/{vendorId}?month=&year=` | Process billing for vendor |
-| POST | `/admin/billing/process-all?month=&year=` | Process billing for all vendors |
-| GET | `/billing-records` | List billing records |
-| GET | `/billing-records/{id}` | Get billing record by ID |
-
-### Reports
-
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| GET | `/reports/client?clientId=&month=&year=` | ADMIN | Client report |
-| GET | `/reports/vendor?vendorId=&month=&year=` | ADMIN, VENDOR | Vendor report |
-| GET | `/reports/employee?employeeId=&month=&year=` | ADMIN, EMPLOYEE | Employee report |
-
-**Authentication Header**:
-```
-Authorization: Bearer <your-jwt-token>
-```
-
-***
-
-## 🗄️ Database Schema
-
-### Core Tables
-- `users` - System users with authentication credentials
-- `clients` - Client organizations
-- `vendors` - Vendor companies with billing configurations
-- `employees` - Employee records linked to vendors
-- `billing_configurations` - Strategy and rate configurations per vendor
-- `trips` - Individual trip records with distance, duration, and cost
-- `billing_records` - Monthly billing summaries per vendor
-
-### Key Indexes
-
+Performance indexes (recommended):
 ```sql
--- Optimize trip queries by vendor and date range
-CREATE INDEX idx_trips_vendor_date ON trips(vendor_id, trip_date);
+-- Trips filtered by vendor and date range
+CREATE INDEX IF NOT EXISTS idx_trips_vendor_date ON trips(vendor_id, trip_date);
 
--- Speed up unprocessed trip lookups
-CREATE INDEX idx_trips_unprocessed ON trips(vendor_id) WHERE processed = false;
+-- Optional covering index for common listing columns
+CREATE INDEX IF NOT EXISTS idx_trips_cover
+ON trips(vendor_id, trip_date) INCLUDE (processed, distance_km, duration_hours);
 
--- Ensure idempotent billing
+-- Speed up unprocessed work queues
+CREATE INDEX IF NOT EXISTS idx_trips_unprocessed ON trips(vendor_id) WHERE processed = false;
+
+-- Idempotency (avoid duplicate billing)
 ALTER TABLE billing_records
-ADD CONSTRAINT uniq_vendor_month_year
+ADD CONSTRAINT IF NOT EXISTS uniq_vendor_month_year
 UNIQUE (vendor_id, billing_month, billing_year);
 ```
 
-### Performance Tuning
-
+Diagnostics:
 ```sql
--- Analyze query performance
+-- Confirm index usage for monthly vendor queries
 EXPLAIN ANALYZE
 SELECT * FROM trips
 WHERE vendor_id = 1 AND trip_date BETWEEN '2025-11-01' AND '2025-11-30';
 
--- Check index usage
+-- Table stats (seq vs idx scans)
 SELECT relname, seq_scan, idx_scan
 FROM pg_stat_user_tables
-WHERE relname IN ('trips', 'billing_records');
+WHERE relname IN ('trips','billing_records');
 
--- Update statistics
+-- Keep planner stats fresh
 ANALYZE trips;
 ```
 
-***
+Data inspection helpers: see `VIEW_ALL_DATABASE.sql` and `COMPLETE_SQL_QUERIES_REFERENCE.sql` in the repo.
 
-## 🔐 Security & Authentication
+---
 
-### Authentication Flow
-1. User submits credentials to `/api/auth/login`
-2. Backend validates credentials using BCrypt
-3. JWT token generated with user details and role
-4. Token returned to client with 24-hour expiry
-5. Client includes token in `Authorization` header for subsequent requests
+## 7) Query Strategy (JPA + SQL)
+- Derived queries (index-friendly): `findByVendorIdAndTripDateBetween(...)`
+- Pagination for large lists: `Pageable`, `Page<T>` → `GET /trips?page=&size=`
+- DTO projections for reports to reduce payload and serialization cost
+- Avoid N+1: fetch joins only where necessary; prefer DTOs on read paths
+- Hibernate JDBC batching for bulk updates (`saveAll`) during billing
 
-### Role-Based Access Control
+---
 
-| Role | Permissions |
-|------|-------------|
-| **ADMIN** | Full system access: manage all entities, process billing, view all reports |
-| **VENDOR** | View own trips, billing records, and reports; manage vendor profile |
-| **EMPLOYEE** | View personal trip history, incentives, and performance reports |
+## 8) Billing Engine (Strategy Pattern)
+- `BillingStrategy` interface with `Package`, `Trip`, and `Hybrid` implementations
+- Factory resolves strategy from `BillingConfiguration`
+- Complexity: O(k) over trips for the period; aggregates computed in-service
+- Idempotency: service pre-check + DB unique constraint
 
-### Security Features
-- Stateless JWT authentication (HS256 algorithm)
-- BCrypt password hashing (strength: 10)
-- Method-level security with `@PreAuthorize`
-- CSRF protection disabled (stateless architecture)
-- Tenant isolation enforced at application layer
+---
 
-***
+## 9) Caching (Caffeine)
+- Spring Cache abstraction with Caffeine backend
+- Caches: `clients`, `vendors`, `employees`, `billingConfigs`
+- Policy: `maximumSize=1000`, `expireAfterWrite=30m`, `recordStats()`
+- `@Cacheable` on read paths; `@CacheEvict` on mutations
+- Effect: Cold GET ~tens of ms → warm GET ~2–5 ms
 
-## 🎥 Demo Videos
+---
 
-- [System Overview & Dashboard](https://www.loom.com/share/d4521430b7c64797a8c4994c3c372253)
-- [Billing Processing Workflow](https://www.loom.com/share/a84c34ee84cf4562b54fb65e8afb09d0)
-- [Vendor & Employee Portals](https://www.loom.com/share/bd68e777aa9849a099153569a18defec)
-- [Reports & Analytics](https://www.loom.com/share/67163804d9ea4c81a16486b8ef2081ff)
+## 10) Security
+- Stateless JWT auth; `SecurityFilterChain` denies all except `/api/auth/**`
+- `JwtAuthenticationFilter` extracts and validates tokens per request
+- RBAC via `@PreAuthorize` on controllers (ADMIN/VENDOR/EMPLOYEE)
+- BCrypt for password storage; CSRF disabled (no cookie sessions)
 
-***
+---
 
-## 📚 Additional Documentation
+## 11) Setup & Run
+Prerequisites: Java 17+, Maven, PostgreSQL 14+, Node.js 18+
 
-- `PART1_OVERVIEW_UI_DATABASE.md` - UI design and database architecture
-- `PART2_SPRINGBOOT_BACKEND.md` - Backend implementation details
-- `API_ENDPOINTS_GUIDE.md` - Comprehensive API reference
-- `VIEW_ALL_DATABASE.sql` - Database inspection queries
-- `COMPLETE_SQL_QUERIES_REFERENCE.sql` - SQL query examples
+1) Configure DB in `src/main/resources/application.yml`:
+```
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/moveinsync
+    username: postgres
+    password: test
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+jwt:
+  secret: your-256-bit-secret-key-change-this-in-production
+  expiration: 86400000
+```
 
-***
+2) Start the frontend (React)
+- Windows (your paths):
+```
+cd C:\Users\abhik\Downloads\billing-platform
+cd frontend
+npm install
 
-## 🤝 Contributing
+# npm start   # (dev on http://localhost:3000)
+```
+- General (macOS/Linux):
+```
+cd /path/to/billing-platform
+npm install
+npm run dev   # or: npm start (if CRA)
+```
 
-Contributions are welcome! Please follow these steps:
+3) Build & start the backend (Spring Boot)
+- Windows (your paths):
+```
+cd C:\Users\abhik\Downloads\billing-platform\billing-platform
+mvn clean install
+mvn spring-boot:run
+```
+- General (macOS/Linux):
+```
+cd /path/to/billing-platform/billing-platform
+mvn clean install
+mvn spring-boot:run
+```
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+4) Load or inspect data (PostgreSQL)
 
-***
+Option A — Non-interactive (one-liners):
+```
+psql -U postgres -c "CREATE DATABASE moveinsync;"
+psql -U postgres -d moveinsync -f "C:\\Users\\abhik\\Downloads\\billing-platform\\billing-platform\\COMPLETE_SQL_QUERIES_REFERENCE.sql"  # example: run a script
+```
 
-## 📄 License
+Option B — Interactive psql session:
+```
+psql -U postgres
+postgres=# CREATE DATABASE moveinsync;
+postgres=# \c moveinsync
+moveinsync=# -- Run any SQL file using \i
+moveinsync=# \i 'C:\\Users\\abhik\\Downloads\\billing-platform\\billing-platform\\VIEW_ALL_DATABASE.sql'       -- view helpers
+moveinsync=# \i 'C:\\path\\to\\your\\seed.sql'                                                -- if you have seed data
+moveinsync=# \dt                                                                                     -- list tables
+```
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+General (macOS/Linux paths):
+```
+psql -U postgres -c "CREATE DATABASE moveinsync;"
+psql -U postgres -d moveinsync -f "/path/to/seed.sql"
+# or interactively:
+psql -U postgres
+postgres=# CREATE DATABASE moveinsync;
+postgres=# \c moveinsync
+moveinsync=# \i '/path/to/VIEW_ALL_DATABASE.sql'
+```
 
-***
+Notes:
+- Schema is auto-managed by Hibernate (`ddl-auto: update`).
+- If you add a `src/main/resources/data.sql`, Spring Boot will auto-load it on startup.
+- Use `VIEW_ALL_DATABASE.sql` to inspect contents and `COMPLETE_SQL_QUERIES_REFERENCE.sql` for handy queries.
 
-## 📧 Contact
+Credentials (sample):
+- Admin: `admin` / `admin`
+- Vendor: `swiftcabs` / `vendor`
+- Employee: `abhikakm` / `employee`
 
-For questions or support, please open an issue in the repository.
+---
 
-***
+## 12) Demo Script (Quick)
+- Login → inspect token in Network response
+- Dashboard loads 4 parallel calls (Clients/Vendors/Employees/Trips)
+- Open Clients → refresh twice to show cache speedup
+- Trips → filter by month/vendor (index-backed)
+- Process Billing (ADMIN) → new Billing Record → retry to show idempotency
+- Reports → vendor/client/employee aggregates
 
-**Built with ❤️ by the MoveInSync Team**
+---
+
+## 13) Operational Notes
+- HikariCP pool: tuned min/max, timeouts for consistent latency
+- Logs: app logs + SQL (dev) for traceability
+- Errors: standardized JSON from `@RestControllerAdvice`
+- Optional: extend cache keys to include tenant/vendor for stricter isolation
+
+---
+
+## 14) Demo Videos
+- Loom 1: [https://www.loom.com/share/d4521430b7c64797a8c4994c3c372253](https://www.loom.com/share/d4521430b7c64797a8c4994c3c372253)
+- Loom 2: [https://www.loom.com/share/a84c34ee84cf4562b54fb65e8afb09d0](https://www.loom.com/share/a84c34ee84cf4562b54fb65e8afb09d0)
+- Loom 3: [https://www.loom.com/share/bd68e777aa9849a099153569a18defec](https://www.loom.com/share/bd68e777aa9849a099153569a18defec)
+- loom4: [https://www.loom.com/share/67163804d9ea4c81a16486b8ef2081ff](https://www.loom.com/share/67163804d9ea4c81a16486b8ef2081ff)
+
+---
+
+## 15) References in Repo
+- `PART1_OVERVIEW_UI_DATABASE.md` – UI + DB design + ingestion
+- `PART2_SPRINGBOOT_BACKEND.md` – Spring Boot architecture & internals
+- `API_ENDPOINTS_GUIDE.md` / `ENDPOINTS_QUICK_REFERENCE.md` – endpoint details
+- `VIEW_ALL_DATABASE.sql` / `COMPLETE_SQL_QUERIES_REFERENCE.sql` – SQL helpers
+
+---
+
+© MoveInSync Billing Platform – Technical Documentation
+
+frame it sucht hat it slookm roe visually apealing so make 14 pt to above after first point this 2nd point will come or but can i also upload video mp4 at github how much max mb fiel i can and reorder and arrnage it nciely
