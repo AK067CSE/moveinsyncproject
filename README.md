@@ -1,73 +1,40 @@
-<div align="center">
+# Unified Billing & Reporting Platform
 
-# 🚀 Unified Billing & Reporting Platform
-
-### Enterprise-Grade Multi-Tenant Billing System for Transportation Operations
-
-**A comprehensive billing and reporting solution designed for multi-client, multi-vendor transportation operations**
-
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14%2B-blue.svg)](https://www.postgresql.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-</div>
+A multi-stakeholder billing and reporting system for multi-client, multi-vendor operations. Backend: Spring Boot (REST, Security, JPA, Caffeine). Database: PostgreSQL (indexes, constraints). Frontend: React (Dashboard, CRUD, Reports).
 
 ---
 
-## 🎥 1. Demo Videos
+## Screenshots
 
-Experience the platform in action through our comprehensive video walkthroughs:
 
-| Demo | Description | Link |
-|------|-------------|------|
-| **Complete System Demo** | Full platform overview and core features | [Watch on Loom](https://www.loom.com/share/d4521430b7c64797a8c4994c3c372253) |
-| **Billing Processing** | End-to-end billing workflow demonstration | [Watch on Loom](https://www.loom.com/share/a84c34ee84cf4562b54fb65e8afb09d0) |
-| **Advanced Features** | Reports, analytics, and role-based access | [Watch on Loom](https://www.loom.com/share/bd68e777aa9849a099153569a18defec) |
-| **Technical Deep Dive** | Architecture and implementation details | [Watch on Loom](https://www.loom.com/share/67163804d9ea4c81a16486b8ef2081ff) |
+<img width="1902" height="793" alt="image" src="https://github.com/user-attachments/assets/1bb8184b-a532-4882-9056-13016f371c4f" />
+
+<img width="1899" height="790" alt="image" src="https://github.com/user-attachments/assets/e337d9df-91cf-4ad2-b7d6-06610fca622e" />
+
+<img width="1916" height="812" alt="image" src="https://github.com/user-attachments/assets/40e26b91-26da-4af4-919d-198592788f72" />
 
 ---
 
-## 📐 2. System Overview
-
-**[📹 Watch Architecture Walkthrough](https://github.com/user-attachments/assets/db7cb499-56b1-49f9-807d-6c259b2224fd)**
-
-### Architecture Stack
-
-```mermaid
-graph LR
-    A[React UI] --> B[Spring Boot REST API]
-    B --> C[PostgreSQL Database]
-    B --> D[Caffeine Cache]
-    B --> E[JWT Security]
-```
-
-### Core Components
-
-- **Frontend**: React 18 with modern UI/UX (Dashboard, CRUD Operations, Interactive Reports)
-- **Backend**: Spring Boot 3 (REST API, Spring Security, JPA/Hibernate, Caffeine Caching)
-- **Database**: PostgreSQL 14+ (Optimized indexes, referential integrity constraints)
-- **Architecture**: Layered design - Controller → Service (Business Logic) → Repository (Data Access)
-- **Security**: Stateless JWT authentication with Role-Based Access Control (RBAC)
-- **Caching**: Caffeine in-memory cache for read-heavy endpoints
-- **Billing Engine**: Transactional billing with Strategy Pattern (Package/Trip/Hybrid models)
+## 1) Demo Videos
+- Loom 1: https://www.loom.com/share/d4521430b7c64797a8c4994c3c372253
+- Loom 2: https://www.loom.com/share/a84c34ee84cf4562b54fb65e8afb09d0
+- Loom 3: https://www.loom.com/share/bd68e777aa9849a099153569a18defec
+- Loom 4: https://www.loom.com/share/67163804d9ea4c81a16486b8ef2081ff
 
 ---
 
-## 📸 3. Application Screenshots
+## 2) System Overview
 
-### Dashboard Overview
-<img width="1902" alt="Admin Dashboard - Real-time metrics and overview" src="https://github.com/user-attachments/assets/1bb8184b-a532-4882-9056-13016f371c4f" />
 
-### Client Management Interface
-<img width="1899" alt="Client Management - CRUD operations with advanced filtering" src="https://github.com/user-attachments/assets/e337d9df-91cf-4ad2-b7d6-06610fca622e" />
-
-### Vendor Operations Portal
-<img width="1916" alt="Vendor Portal - Trip management and billing overview" src="https://github.com/user-attachments/assets/40e26b91-26da-4af4-919d-198592788f72" />
+- React UI → Spring Boot REST → PostgreSQL
+- Layered backend: Controller → Service (business logic) → Repository (Spring Data JPA)
+- JWT stateless authentication + RBAC (ADMIN, VENDOR, EMPLOYEE)
+- Caffeine in-memory caching for read-heavy endpoints
+- Transactional billing with Strategy Pattern (Package/Trip/Hybrid)
 
 ---
 
-## 🏭️ 4. Architecture & Request Flow
+## 3) Architecture & Flow
 - UI pages call REST endpoints via Axios; responses are DTOs (no JPA entities leaked)
 - Controllers are thin; Services encapsulate business logic, `@Transactional` boundaries
 - Repositories use derived methods, custom queries, pagination
@@ -81,34 +48,30 @@ Request example (Process Billing):
 
 ---
 
-## 🔐 5. Authentication & Role-Based Access Control
+## 4) Authentication & Roles
 - JWT (HS256) with 24h expiry
 - BCrypt password hashing (strength 10)
 - Spring Security: `/api/auth/**` is public; all other endpoints require auth
 - Method-level RBAC with `@PreAuthorize`
 
-### User Roles & Permissions
-
-| Role | Access Level | Capabilities |
-|------|-------------|-------------|
-| **ADMIN** | System-wide | Full CRUD operations, billing processing, comprehensive reporting |
-| **VENDOR** | Vendor-scoped | View and manage own trips, billing records, and performance reports |
-| **EMPLOYEE** | Employee-scoped | Access personal trip history, view assigned routes, track incentives |
+Roles:
+- ADMIN: Full CRUD, process billing, all reports
+- VENDOR: Own trips/billing/reports
+- EMPLOYEE: Own trip history/incentives
 
 ---
 
-## 🏢 6. Multi-Tenancy & Data Isolation
+## 5) Multi-Tenancy / Tenant Isolation
 This implementation uses tenant-aware scoping at the application layer:
 - Data access is scoped by the authenticated user/vendor/client (no cross-tenant reads)
 - Role/ownership checks enforced server-side in services/repositories
 - Caching keys are entity-ID based and can be extended to include tenant/vendor identifiers if needed (e.g., `tenantId:id`)
 - UI reflects isolation via role-based menus and filtered data per user context
 
-Note: No separate schema-per-tenant is created in this codebase; isolation is enforced via access control and query scoping.
 
 ---
 
-## 🔌 7. REST API Endpoints
+## 6) API Endpoints (with Roles)
 Base URL: `http://localhost:8080/api`
 
 - Auth
@@ -160,7 +123,7 @@ Authorization: Bearer <token>
 
 ---
 
-## 💾 8. Database Schema & Performance Optimization
+## 7) Database Schema (PostgreSQL)
 Core tables: `users`, `clients`, `vendors`, `employees`, `billing_configurations`, `trips`, `billing_records`.
 
 Key integrity rules:
@@ -168,7 +131,7 @@ Key integrity rules:
 - Unique constraint to prevent duplicate monthly billing per vendor:
   - `(vendor_id, billing_month, billing_year)` on `billing_records`
 
-Performance indexes (recommended):
+Performance indexes :
 ```sql
 -- Trips filtered by vendor and date range
 CREATE INDEX IF NOT EXISTS idx_trips_vendor_date ON trips(vendor_id, trip_date);
@@ -206,7 +169,7 @@ Data inspection helpers: see `VIEW_ALL_DATABASE.sql` and `COMPLETE_SQL_QUERIES_R
 
 ---
 
-## 📊 9. Query Strategy & Data Access Patterns
+## 8) Query Strategy (JPA + SQL)
 - Derived queries (index-friendly): `findByVendorIdAndTripDateBetween(...)`
 - Pagination for large lists: `Pageable`, `Page<T>` → `GET /trips?page=&size=`
 - DTO projections for reports to reduce payload and serialization cost
@@ -215,7 +178,7 @@ Data inspection helpers: see `VIEW_ALL_DATABASE.sql` and `COMPLETE_SQL_QUERIES_R
 
 ---
 
-## 💰 10. Billing Engine Architecture
+## 9) Billing Engine (Strategy Pattern)
 - `BillingStrategy` interface with `Package`, `Trip`, and `Hybrid` implementations
 - Factory resolves strategy from `BillingConfiguration`
 - Complexity: O(k) over trips for the period; aggregates computed in-service
@@ -223,7 +186,7 @@ Data inspection helpers: see `VIEW_ALL_DATABASE.sql` and `COMPLETE_SQL_QUERIES_R
 
 ---
 
-## ⚡ 11. High-Performance Caching Strategy
+## 10) Caching (Caffeine)
 - Spring Cache abstraction with Caffeine backend
 - Caches: `clients`, `vendors`, `employees`, `billingConfigs`
 - Policy: `maximumSize=1000`, `expireAfterWrite=30m`, `recordStats()`
@@ -232,7 +195,7 @@ Data inspection helpers: see `VIEW_ALL_DATABASE.sql` and `COMPLETE_SQL_QUERIES_R
 
 ---
 
-## 🛡️ 12. Security Implementation
+## 11) Security
 - Stateless JWT auth; `SecurityFilterChain` denies all except `/api/auth/**`
 - `JwtAuthenticationFilter` extracts and validates tokens per request
 - RBAC via `@PreAuthorize` on controllers (ADMIN/VENDOR/EMPLOYEE)
@@ -240,12 +203,10 @@ Data inspection helpers: see `VIEW_ALL_DATABASE.sql` and `COMPLETE_SQL_QUERIES_R
 
 ---
 
-## 🚀 13. Setup & Installation Guide
+## 12) Setup & Run
 Prerequisites: Java 17+, Maven, PostgreSQL 14+, Node.js 18+
 
-### Step 1: Database Configuration
-
-Configure PostgreSQL connection in `src/main/resources/application.yml`:
+1) Configure DB in `src/main/resources/application.yml`:
 ```
 spring:
   datasource:
@@ -261,50 +222,45 @@ jwt:
   expiration: 86400000
 ```
 
-### Step 2: Launch Frontend Application
-
-**Windows:**
+2) Start the frontend (React)
+- Windows (your paths):
 ```
 cd C:\Users\abhik\Downloads\billing-platform
 npm install
-npm run dev   # Vite (dev on http://localhost:5173)
-# or if the project uses CRA:
+
 # npm start   # (dev on http://localhost:3000)
 ```
-
-**macOS/Linux:**
-```bash
+- General (macOS/Linux):
+```
 cd /path/to/billing-platform
 npm install
 npm run dev   # or: npm start (if CRA)
 ```
 
-### Step 3: Build & Run Backend
-
-**Windows:**
-```bash
+3) Build & start the backend (Spring Boot)
+- Windows (your paths):
+```
 cd C:\Users\abhik\Downloads\billing-platform\billing-platform
 mvn clean install
 mvn spring-boot:run
 ```
-
-**macOS/Linux:**
-```bash
+- General (macOS/Linux):
+```
 cd /path/to/billing-platform/billing-platform
 mvn clean install
 mvn spring-boot:run
 ```
 
-### Step 4: Database Setup & Data Loading
+4) Load or inspect data (PostgreSQL)
 
-**Option A — Quick Setup (Command Line):**
-```bash
+Option A — Non-interactive (one-liners):
+```
 psql -U postgres -c "CREATE DATABASE moveinsync;"
 psql -U postgres -d moveinsync -f "C:\\Users\\abhik\\Downloads\\billing-platform\\billing-platform\\COMPLETE_SQL_QUERIES_REFERENCE.sql"  # example: run a script
 ```
 
-**Option B — Interactive Session:**
-```bash
+Option B — Interactive psql session:
+```
 psql -U postgres
 postgres=# CREATE DATABASE moveinsync;
 postgres=# \c moveinsync
@@ -314,7 +270,7 @@ moveinsync=# \i 'C:\\path\\to\\your\\seed.sql'                                  
 moveinsync=# \dt                                                                                     -- list tables
 ```
 
-**macOS/Linux:**
+General (macOS/Linux paths):
 ```
 psql -U postgres -c "CREATE DATABASE moveinsync;"
 psql -U postgres -d moveinsync -f "/path/to/seed.sql"
@@ -325,70 +281,40 @@ postgres=# \c moveinsync
 moveinsync=# \i '/path/to/VIEW_ALL_DATABASE.sql'
 ```
 
-### Default Credentials
+Notes:
+- Schema is auto-managed by Hibernate (`ddl-auto: update`).
+- If you add a `src/main/resources/data.sql`, Spring Boot will auto-load it on startup.
+- Use `VIEW_ALL_DATABASE.sql` to inspect contents and `COMPLETE_SQL_QUERIES_REFERENCE.sql` for handy queries.
 
-| Role | Username | Password |
-|------|----------|----------|
-| Admin | `admin` | `admin` |
-| Vendor | `swiftcabs` | `vendor` |
-| Employee | `abhikakm` | `employee` |
-
-### Important Notes
-- Schema is auto-managed by Hibernate (`ddl-auto: update`)
-- Add `src/main/resources/data.sql` for automatic data loading on startup
-- Use `VIEW_ALL_DATABASE.sql` to inspect database contents
-- Refer to `COMPLETE_SQL_QUERIES_REFERENCE.sql` for query examples
+Credentials (sample):
+- Admin: `admin` / `admin`
+- Vendor: `swiftcabs` / `vendor`
+- Employee: `abhikakm` / `employee`
 
 ---
 
-## 🧪 14. Testing & Verification Guide
-
-### Quick Demo Workflow
-1. **Authentication**: Login → inspect JWT token in Network tab
-2. **Dashboard**: Observe 4 parallel API calls loading data (Clients/Vendors/Employees/Trips)
-3. **Cache Performance**: Navigate to Clients page → refresh twice to observe cache speedup
-4. **Filtering**: Use Trips page → filter by month/vendor (index-backed queries)
-5. **Billing Process**: (ADMIN only) Process billing → verify new Billing Record → retry to demonstrate idempotency
-6. **Reporting**: Generate vendor/client/employee performance aggregates
+## 13) Demo Script (Quick)
+- Login → inspect token in Network response
+- Dashboard loads 4 parallel calls (Clients/Vendors/Employees/Trips)
+- Open Clients → refresh twice to show cache speedup
+- Trips → filter by month/vendor (index-backed)
+- Process Billing (ADMIN) → new Billing Record → retry to show idempotency
+- Reports → vendor/client/employee aggregates
 
 ---
 
-## 🛠️ 15. Operational Considerations
-
-### Performance & Monitoring
-- **Connection Pool**: HikariCP tuned for consistent P95 latency
-- **Logging**: Application logs + SQL query logging (development mode)
-- **Error Handling**: Standardized JSON responses via `@RestControllerAdvice`
-- **Cache Strategy**: Optional tenant/vendor-specific cache keys for stricter isolation
-
-### Production Readiness Checklist
-- [ ] Update JWT secret key in production environment
-- [ ] Configure appropriate database connection pool sizes
-- [ ] Enable production logging levels
-- [ ] Set up monitoring and alerting
-- [ ] Review and apply database indexes
-- [ ] Configure backup and disaster recovery
-
-
-
-<div align="center">
-
+## 14) Operational Notes
+- HikariCP pool: tuned min/max, timeouts for consistent latency
+- Logs: app logs + SQL (dev) for traceability
+- Errors: standardized JSON from `@RestControllerAdvice`
+- Optional: extend cache keys to include tenant/vendor for stricter isolation
 
 ---
 
-### 🎯 Key Features Summary
-
-✅ Multi-tenant architecture with role-based access control  
-✅ Automated billing with multiple pricing strategies  
-✅ High-performance caching with Caffeine  
-✅ Comprehensive reporting and analytics  
-✅ Secure JWT-based authentication  
-✅ Optimized PostgreSQL database with smart indexing  
+## 15) References in Repo
+- `API_ENDPOINTS_GUIDE.md` / `ENDPOINTS_QUICK_REFERENCE.md` – endpoint details
+- `VIEW_ALL_DATABASE.sql` / `COMPLETE_SQL_QUERIES_REFERENCE.sql` – SQL helpers
 
 ---
 
-**Built with ❤️ using Spring Boot, React, and PostgreSQL**
-
-© 2025 MoveInSync Billing Platform | Technical Documentation
-
-</div>
+© MoveInSync Billing Platform – Technical Documentation
