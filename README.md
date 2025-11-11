@@ -268,9 +268,9 @@ Notes:
 - Use `VIEW_ALL_DATABASE.sql` to inspect contents and `COMPLETE_SQL_QUERIES_REFERENCE.sql` for handy queries.
 
 Credentials (sample):
-- Admin: `admin` / `admin123`
-- Vendor: `swiftcabs` / `vendor123`
-- Employee: `abhikakm` / `employee123`
+- Admin: `admin` / `admin`
+- Vendor: `swiftcabs` / `vendor`
+- Employee: `abhikakm` / `employee`
 
 ---
 
