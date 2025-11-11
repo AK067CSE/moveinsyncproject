@@ -381,11 +381,6 @@ moveinsync=# \i '/path/to/VIEW_ALL_DATABASE.sql'
 
 <div align="center">
 
-## 🚀 Ready to Get Started?
-
-Follow the [Setup & Installation Guide](#-13-setup--installation-guide) to run the platform locally.
-
-For questions or contributions, please refer to the documentation files in the repository.
 
 ---
 
