@@ -369,15 +369,7 @@ moveinsync=# \i '/path/to/VIEW_ALL_DATABASE.sql'
 - [ ] Review and apply database indexes
 - [ ] Configure backup and disaster recovery
 
----
 
-## 📚 16. Documentation & References
-- `PART1_OVERVIEW_UI_DATABASE.md` – UI + DB design + ingestion
-- `PART2_SPRINGBOOT_BACKEND.md` – Spring Boot architecture & internals
-- `API_ENDPOINTS_GUIDE.md` / `ENDPOINTS_QUICK_REFERENCE.md` – endpoint details
-- `VIEW_ALL_DATABASE.sql` / `COMPLETE_SQL_QUERIES_REFERENCE.sql` – SQL helpers
-
----
 
 <div align="center">
 
