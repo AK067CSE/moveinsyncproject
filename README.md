@@ -329,9 +329,9 @@ moveinsync=# \i '/path/to/VIEW_ALL_DATABASE.sql'
 
 | Role | Username | Password |
 |------|----------|----------|
-| Admin | `admin` | `admin123` |
-| Vendor | `swiftcabs` | `vendor123` |
-| Employee | `abhikakm` | `employee123` |
+| Admin | `admin` | `admin` |
+| Vendor | `swiftcabs` | `vendor` |
+| Employee | `abhikakm` | `employee` |
 
 ### Important Notes
 - Schema is auto-managed by Hibernate (`ddl-auto: update`)
