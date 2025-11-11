@@ -5,6 +5,10 @@ A multi-stakeholder billing and reporting system for multi-client, multi-vendor 
 ---
 
 ## 1) System Overview
+
+https://github.com/user-attachments/assets/db7cb499-56b1-49f9-807d-6c259b2224fd
+
+
 - React UI → Spring Boot REST → PostgreSQL
 - Layered backend: Controller → Service (business logic) → Repository (Spring Data JPA)
 - JWT stateless authentication + RBAC (ADMIN, VENDOR, EMPLOYEE)
