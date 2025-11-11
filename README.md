@@ -206,9 +206,9 @@ jwt:
 - Windows (your paths):
 ```
 cd C:\Users\abhik\Downloads\billing-platform
+cd frontend
 npm install
-npm run dev   # Vite (dev on http://localhost:5173)
-# or if the project uses CRA:
+
 # npm start   # (dev on http://localhost:3000)
 ```
 - General (macOS/Linux):
